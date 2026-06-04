@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: 
 //
@@ -177,6 +177,15 @@ void respawn( CBaseEntity *pEdict, bool fCopyCorpse )
 void GameStartFrame( void )
 {
 	VPROF( "GameStartFrame" );
+
+	// Pump the game rules every frame. Without this, CCSGameRules::Think()
+	// never runs, so the per-frame round state machine is dead: the freeze
+	// period never expires, CheckRoundTimeExpired() never fires (the round
+	// won't end when the timer hits 0:00), and the scheduled RestartRound()
+	// never triggers. This call is standard in stock CS:S/HL2MP and was
+	// dropped in this port.
+	if ( g_pGameRules )
+		g_pGameRules->Think();
 
 	if ( g_fGameOver )
 		return;

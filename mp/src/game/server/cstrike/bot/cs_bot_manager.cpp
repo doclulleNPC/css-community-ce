@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose:
 //
@@ -914,7 +914,11 @@ bool CCSBotManager::ClientCommand( CBasePlayer *player, const CCommand &args )
  */
 bool CCSBotManager::BotAddCommand( int team, bool isFromConsole, const char *profileName, CSWeaponType weaponType, BotDifficultyType difficulty )
 {
-	/*if ( !TheNavMesh->IsLoaded() )
+	// Do not add a bot until a Navigation Mesh exists. On maps without a
+	// precomputed .nav file the bot's pathfinding dereferences null CNavAreas
+	// and crashes the game. Stock CS:S behavior: kick off generation and refuse
+	// to add the bot until it's ready. (This guard had been commented out.)
+	if ( !TheNavMesh->IsLoaded() )
 	{
 		// If there isn't a Navigation Mesh in memory, create one
 		if ( !TheNavMesh->IsGenerating() )
@@ -926,7 +930,7 @@ bool CCSBotManager::BotAddCommand( int team, bool isFromConsole, const char *pro
 			}
 			return false;
 		}
-	}*/
+	}
 
 	// dont allow bots to join if the Navigation Mesh is being generated
 	if (TheNavMesh->IsGenerating())
