@@ -11,7 +11,7 @@
 #include "iclientvehicle.h"
 #include "ivieweffects.h"
 #include "input.h"
-#include "ieffects.h"
+#include "IEffects.h"
 #include "fx.h"
 #include "c_basetempentity.h"
 #include "hud_macros.h"	//HOOK_COMMAND

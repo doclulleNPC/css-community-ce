@@ -7,20 +7,20 @@
 
 #include "cbase.h"
 #include "cstriketextwindow.h"
-#include "BackgroundPanel.h"
+#include "backgroundpanel.h"
 #include <cdll_client_int.h>
 
 #include <vgui/IScheme.h>
 #include <vgui/ILocalize.h>
 #include <vgui/ISurface.h>
-#include <FileSystem.h>
+#include <filesystem.h>
 #include <KeyValues.h>
 #include <convar.h>
 #include <vgui_controls/ImageList.h>
 
 #include <vgui_controls/TextEntry.h>
 #include <vgui_controls/Button.h>
-#include <vgui_controls/buildgroup.h>
+#include <vgui_controls/BuildGroup.h>
 
 #include "IGameUIFuncs.h" // for key bindings
 #include <igameresources.h>

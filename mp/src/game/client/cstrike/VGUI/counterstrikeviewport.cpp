@@ -21,7 +21,7 @@
 #include <KeyValues.h>
 #include <vgui/Cursor.h>
 #include <vgui/IScheme.h>
-#include <vgui/IVGUI.h>
+#include <vgui/IVGui.h>
 #include <vgui/ILocalize.h>
 #include <vgui/VGUI.h>
 
@@ -35,14 +35,14 @@
 #include "cstrikeclassmenu.h"
 #include "cstrikebuymenu.h"
 #include "cstrikebuyequipmenu.h"
-#include "cstrikespectatorgUI.h"
+#include "cstrikespectatorgui.h"
 #include "cstrikeclientscoreboard.h"
 #include "clientmode_csnormal.h"
 #include "IGameUIFuncs.h"
 
 // viewport definitions
 #include <baseviewport.h>
-#include "CounterStrikeViewport.h"
+#include "counterstrikeviewport.h"
 #include "cs_gamerules.h"
 // #include "c_user_message_register.h"
 #include "vguicenterprint.h"

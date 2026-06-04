@@ -36,7 +36,7 @@
 
 #include "weapon_csbase.h"
 #include <KeyValues.h>
-#include <UtlVector.h>
+#include <utlvector.h>
 
 class BuyPreset;
 class CCSWeaponInfo;

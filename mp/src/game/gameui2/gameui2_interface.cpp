@@ -8,23 +8,31 @@ You should have received a copy of the license along with this
 work.  If not, see <http://creativecommons.org/licenses/by-sa/4.0/>.
 */
 
-#if !defined( _X360 )
+// STL before Valve headers, so minmax.h's min/max macros don't clobber libstdc++.
+#include <algorithm>
+#include <string>
+
+#if defined( _WIN32 ) && !defined( _X360 )
 #include <windows.h>
 #endif
 #include <sys/types.h>
 #include <sys/stat.h>
 #include <stdio.h>
+#ifdef _WIN32
 #include <io.h>
+#endif
 #include <tier0/dbg.h>
+#ifdef _WIN32
 #include <direct.h>
+#endif
 
 #ifdef SendMessage
 #undef SendMessage
 #endif
 
-#include "FileSystem.h"
-#include "GameUI2_Interface.h"
-#include "BasePanel.h"
+#include "filesystem.h"
+#include "gameui2_interface.h"
+#include "basepanel.h"
 //#include "Sys_Utils.h"
 #include "string.h"
 #include "tier0/icommandline.h"
@@ -32,7 +40,7 @@ work.  If not, see <http://creativecommons.org/licenses/by-sa/4.0/>.
 // interface to engine
 //#include "EngineInterface.h"
 //#include "VGuiSystemModuleLoader.h"
-#include "bitmap/TGALoader.h"
+#include "bitmap/tgaloader.h"
 //#include "GameConsole.h"
 //#include "LoadingDialog.h"
 //#include "CDKeyEntryDialog.h"

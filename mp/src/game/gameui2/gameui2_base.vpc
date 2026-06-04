@@ -154,7 +154,7 @@ $Project "GameUI2"
 		$Lib		vtf
 		$ImpLib		steam_api
 		
-		$ImpLib		"$SRCDIR\thirdparty\hlib\lib\HLLib"
+		$ImpLib		"$SRCDIR\thirdparty\hlib\lib\HLLib" [$WIN32]
 		
 		$Lib $LIBCOMMON/libcrypto [$POSIX]
 

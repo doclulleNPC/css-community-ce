@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: dll-agnostic routines (no dll dependencies here)
 //
@@ -71,16 +71,18 @@ wchar_t * BufWPrintf(wchar_t *buf, int& len, const wchar_t *fmt, ...)
 #endif
 
 //--------------------------------------------------------------------------------------------------------------
-#ifdef _WIN32
 const wchar_t * NumAsWString( int val )
 {
 	const int BufLen = 16;
 	static wchar_t buf[BufLen];
+#ifdef _WIN32
 	int len = BufLen;
 	BufWPrintf( buf, len, L"%d", val );
+#else
+	swprintf( buf, BufLen, L"%d", val );
+#endif
 	return buf;
 }
-#endif
 
 //--------------------------------------------------------------------------------------------------------------
 const char * NumAsString( int val )

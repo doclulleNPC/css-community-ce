@@ -5,7 +5,7 @@
 //=============================================================================//
 
 #include "cbase.h"
-#include <vgui/isurface.h>
+#include <vgui/ISurface.h>
 #include "clientmode_csnormal.h"
 #include "cs_gamerules.h"
 #include "hud_numericdisplay.h"
@@ -16,8 +16,8 @@
 #include "c_cs_playerresource.h"
 #include <coordsize.h>
 #include "hud_macros.h"
-#include "vgui/ivgui.h"
-#include "vgui/ilocalize.h"
+#include "vgui/IVGui.h"
+#include "vgui/ILocalize.h"
 #include "mapoverview.h"
 #include "cstrikespectatorgui.h"
 #include "hud_radar.h"

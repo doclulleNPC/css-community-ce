@@ -7,7 +7,7 @@
 
 #include "cbase.h"
 #include "hud.h"
-#include "CstrikeClientScoreBoard.h"
+#include "cstrikeclientscoreboard.h"
 #include "c_team.h"
 #include "c_cs_playerresource.h"
 #include "c_cs_player.h"
@@ -18,7 +18,7 @@
 #include <vgui/IScheme.h>
 #include <vgui/ILocalize.h>
 #include <vgui/ISurface.h>
-#include <vgui/IVgui.h>
+#include <vgui/IVGui.h>
 #include <vgui_controls/SectionedListPanel.h>
 
 #include "voice_status.h"

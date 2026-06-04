@@ -9,10 +9,15 @@ work.  If not, see <http://creativecommons.org/licenses/by-sa/4.0/>.
 */
 #pragma once
 
+// Pull in C++ standard headers before Valve's minmax.h leaks its min/max macros,
+// which would otherwise clobber std::min/std::max inside libstdc++ on Linux/gcc.
+#include <algorithm>
+#include <string>
+
 #include "igameui2.h"
 #include "steam/steam_api.h"
 #include "cdll_int.h"
-#include "engine/ienginesound.h"
+#include "engine/IEngineSound.h"
 #include "ienginevgui.h"
 #include "SoundEmitterSystem/isoundemittersystembase.h"
 #include "ivrenderview.h"

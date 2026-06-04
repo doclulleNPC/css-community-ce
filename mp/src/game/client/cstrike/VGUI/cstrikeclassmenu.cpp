@@ -6,12 +6,12 @@
 //=============================================================================//
 
 #include "cbase.h"
-#include "CStrikeClassMenu.h"
+#include "cstrikeclassmenu.h"
 
 #include <KeyValues.h>
-#include <FileSystem.h>
+#include <filesystem.h>
 #include <vgui_controls/Button.h>
-#include <vgui/IVGUI.h>
+#include <vgui/IVGui.h>
 
 #include "hud.h" // for gEngfuncs
 #include "cs_gamerules.h"

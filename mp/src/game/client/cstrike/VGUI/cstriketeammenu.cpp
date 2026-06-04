@@ -6,8 +6,8 @@
 //=============================================================================//
 
 #include "cbase.h"
-#include "CStrikeTeamMenu.h"
-#include "BackgroundPanel.h"
+#include "cstriketeammenu.h"
+#include "backgroundpanel.h"
 #include <convar.h>
 #include "hud.h" // for gEngfuncs
 #include "c_cs_player.h"

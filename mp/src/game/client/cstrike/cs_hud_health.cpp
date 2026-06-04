@@ -30,7 +30,7 @@ using namespace vgui;
 #include "hud_numericdisplay.h"
 #include "cs_gamerules.h"
 
-#include "ConVar.h"
+#include "convar.h"
 
 //-----------------------------------------------------------------------------
 // Purpose: Health panel

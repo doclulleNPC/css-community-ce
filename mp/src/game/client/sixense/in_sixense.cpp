@@ -71,7 +71,7 @@ using sixenseMath::Line;
 #endif 
 
 #ifdef PORTAL2
-#include "BasePanel.h"
+#include "basepanel.h"
 #include "usermessages.h"
 #include "cdll_int.h"
 #include "iclientmode.h"

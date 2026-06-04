@@ -8,18 +8,22 @@ You should have received a copy of the license along with this
 work.  If not, see <http://creativecommons.org/licenses/by-sa/4.0/>.
 */
 
+// STL before Valve headers, so minmax.h's min/max macros don't clobber libstdc++.
+#include <algorithm>
+#include <string>
+
 #include "basepanel.h"
 #include "./GameUI/IGameUI.h"
 #include "ienginevgui.h"
-#include "engine/ienginesound.h"
+#include "engine/IEngineSound.h"
 //#include "EngineInterface.h"
 #include "tier0/dbg.h"
 #include "ixboxsystem.h"
-#include "GameUI2_Interface.h"
+#include "gameui2_interface.h"
 #include "game/client/IGameClientExports.h"
-#include "gameui/igameconsole.h"
+#include "GameUI/IGameConsole.h"
 #include "inputsystem/iinputsystem.h"
-#include "FileSystem.h"
+#include "filesystem.h"
 #include "tier2/renderutils.h"
 
 // BaseModUI High-level windows
@@ -30,7 +34,7 @@ work.  If not, see <http://creativecommons.org/licenses/by-sa/4.0/>.
 #include "vgui/ILocalize.h"
 #include "vgui_controls/AnimationController.h"
 //#include "gameui2_util.h"
-#include "vguimatsurface/imatsystemsurface.h"
+#include "VGuiMatSurface/IMatSystemSurface.h"
 #include "materialsystem/imaterialsystem.h"
 #include "materialsystem/imesh.h"
 #include "tier0/icommandline.h"

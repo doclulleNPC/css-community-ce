@@ -6,7 +6,7 @@
 //=============================================================================//
 
 #include "cbase.h"
-#include "CstrikeSpectatorGUI.h"
+#include "cstrikespectatorgui.h"
 #include "hud.h"
 #include "cs_shareddefs.h"
 

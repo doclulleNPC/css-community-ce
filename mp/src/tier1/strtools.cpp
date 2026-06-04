@@ -1411,7 +1411,7 @@ int _V_UCS2ToUnicode( const ucs2 *pUCS2, wchar_t *pUnicode, int cubDestSizeInByt
 	size_t nMaxUTF8 = cubDestSizeInBytes;
 	char *pIn = (char *)pUCS2;
 	char *pOut = (char *)pUnicode;
-	if ( conv_t > 0 )
+	if ( conv_t != (iconv_t)-1 )
 	{
 		cchResult = iconv( conv_t, &pIn, &nLenUnicde, &pOut, &nMaxUTF8 );
 		iconv_close( conv_t );
@@ -1451,7 +1451,7 @@ int _V_UnicodeToUCS2( const wchar_t *pUnicode, int cubSrcInBytes, char *pUCS2, i
 	size_t nMaxUCS2 = cubDestSizeInBytes;
 	char *pIn = (char*)pUnicode;
 	char *pOut = pUCS2;
-	if ( conv_t > 0 )
+	if ( conv_t != (iconv_t)-1 )
 	{
 		cchResult = iconv( conv_t, &pIn, &nLenUnicde, &pOut, &nMaxUCS2 );
 		iconv_close( conv_t );
@@ -1499,7 +1499,7 @@ int _V_UCS2ToUTF8( const ucs2 *pUCS2, char *pUTF8, int cubDestSizeInBytes )
 	size_t nMaxUTF8 = cubDestSizeInBytes - 1;
 	char *pIn = (char *)pUCS2;
 	char *pOut = (char *)pUTF8;
-	if ( conv_t > 0 )
+	if ( conv_t != (iconv_t)-1 )
 	{
 		const size_t nBytesToWrite = nMaxUTF8;
 		cchResult = iconv( conv_t, &pIn, &nLenUnicde, &pOut, &nMaxUTF8 );
@@ -1544,7 +1544,7 @@ int _V_UTF8ToUCS2( const char *pUTF8, int cubSrcInBytes, ucs2 *pUCS2, int cubDes
 	size_t nMaxUTF8 = cubDestSizeInBytes;
 	char *pIn = (char *)pUTF8;
 	char *pOut = (char *)pUCS2;
-	if ( conv_t > 0 )
+	if ( conv_t != (iconv_t)-1 )
 	{
 		cchResult = iconv( conv_t, &pIn, &nLenUnicde, &pOut, &nMaxUTF8 );
 		iconv_close( conv_t );
@@ -2980,3 +2980,26 @@ bool BGetLocalFormattedTime( time_t timeVal, char *pchTime, int cubTime )
 {
 	return BGetLocalFormattedDateAndTime( timeVal, NULL, 0, pchTime, cubTime );
 }
+
+// glibc >= 2.31 dropped the -ffinite-math-only aliases (__*_finite) that Valve's
+// prebuilt static libs (particles.a, bitmap.a, vtf.a, ...) still reference. Define
+// them here so they land in tier1.a and resolve at link time for every DLL.
+#if defined(POSIX) || defined(__linux__)
+#include <math.h>
+extern "C" {
+	float  __acosf_finite ( float x )            { return acosf( x ); }
+	double __acos_finite  ( double x )           { return acos( x ); }
+	float  __asinf_finite ( float x )            { return asinf( x ); }
+	double __asin_finite  ( double x )           { return asin( x ); }
+	float  __atan2f_finite( float y, float x )   { return atan2f( y, x ); }
+	double __atan2_finite ( double y, double x ) { return atan2( y, x ); }
+	float  __expf_finite  ( float x )            { return expf( x ); }
+	double __exp_finite   ( double x )           { return exp( x ); }
+	float  __logf_finite  ( float x )            { return logf( x ); }
+	double __log_finite   ( double x )           { return log( x ); }
+	float  __log10f_finite( float x )            { return log10f( x ); }
+	double __log10_finite ( double x )           { return log10( x ); }
+	float  __powf_finite  ( float x, float y )   { return powf( x, y ); }
+	double __pow_finite   ( double x, double y ) { return pow( x, y ); }
+}
+#endif

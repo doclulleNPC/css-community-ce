@@ -10,13 +10,13 @@
 #include "clientmode_csnormal.h"
 #include "cdll_client_int.h"
 #include "iinput.h"
-#include "vgui/isurface.h"
-#include "vgui/ipanel.h"
+#include "vgui/ISurface.h"
+#include "vgui/IPanel.h"
 #include <vgui_controls/AnimationController.h>
 #include "ivmodemanager.h"
-#include "BuyMenu.h"
+#include "buymenu.h"
 #include "filesystem.h"
-#include "vgui/ivgui.h"
+#include "vgui/IVGui.h"
 #include "hud_basechat.h"
 #include "view_shared.h"
 #include "view.h"
@@ -28,7 +28,7 @@
 #include <imapoverview.h>
 #include "c_playerresource.h"
 #include "c_soundscape.h"
-#include <keyvalues.h>
+#include <KeyValues.h>
 #include "text_message.h"
 #include "panelmetaclassmgr.h"
 #include "vguicenterprint.h"

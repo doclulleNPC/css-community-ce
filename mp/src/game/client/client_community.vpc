@@ -13,7 +13,7 @@ $Configuration
 {
 	$Compiler
 	{
-		$AdditionalIncludeDirectories		"$BASE;.\cstrike\vgui,.\cstrike\buy_presets,.\cstrike,$SRCDIR\game\shared\cstrike,$SRCDIR\game\gameui2"
+		$AdditionalIncludeDirectories		"$BASE;.\cstrike\VGUI,.\cstrike\buy_presets,.\cstrike,$SRCDIR\game\shared\cstrike,$SRCDIR\game\gameui2"
 		$AdditionalIncludeDirectories		"$BASE;.\community,$SRCDIR\game\shared\community,$SRCDIR\thirdparty\fmod\inc"
 		$PreprocessorDefinitions			"$BASE;CSTRIKE_DLL;GAMEUI2;COMMUNITY_CLIENT_DLL;GLOWS_ENABLE"
 	}
@@ -39,14 +39,18 @@ $Project "Client"
 		$File	"$SRCDIR\game\shared\predicted_viewmodel.cpp"
 		$File	"$SRCDIR\game\shared\predicted_viewmodel.h"
 
+		// FMOD ships only a Windows library (fmod_vc.lib); there is no Linux FMOD
+		// binary, so the background-music feature is Windows-only for now. These
+		// files are self-contained and unreferenced elsewhere, so excluding them
+		// on POSIX lets the Linux client link without FMOD.
 		$Folder "FMOD"
 		{
-			$File	"fmod\fmodmanager.cpp"
-			$File	"fmod\fmodmanager.h"
-			$File	"fmod\fmod_filesystem.cpp"
-			$File	"fmod\fmod_filesystem.h"
-			$File	"fmod\c_sound_fmod.cpp"
-			$File	"fmod\c_sound_fmod.h"
+			$File	"fmod\fmodmanager.cpp"		[$WIN32]
+			$File	"fmod\fmodmanager.h"		[$WIN32]
+			$File	"fmod\fmod_filesystem.cpp"	[$WIN32]
+			$File	"fmod\fmod_filesystem.h"	[$WIN32]
+			$File	"fmod\c_sound_fmod.cpp"		[$WIN32]
+			$File	"fmod\c_sound_fmod.h"		[$WIN32]
 		}
 
 		$Folder	"Counter Strike Source Community DLL"
@@ -166,15 +170,15 @@ $Project "Client"
 				$File	"cstrike\VGUI\backgroundpanel.cpp"
 				$File	"cstrike\VGUI\backgroundpanel.h"
 				$File	"cstrike\VGUI\buymouseoverpanelbutton.h"
-				$File	"cstrike\Vgui\buypreset_imageinfo.cpp"
-				$File	"cstrike\Vgui\buypreset_listbox.cpp"
-				$File	"cstrike\Vgui\buypreset_listbox.h"
-				$File	"cstrike\Vgui\buypreset_panel.cpp"
-				$File	"cstrike\Vgui\buypreset_weaponsetlabel.h"
-				$File	"cstrike\Vgui\career_box.cpp"
-				$File	"cstrike\Vgui\career_box.h"
-				$File	"cstrike\Vgui\career_button.cpp"
-				$File	"cstrike\Vgui\career_button.h"
+				$File	"cstrike\VGUI\buypreset_imageinfo.cpp"
+				$File	"cstrike\VGUI\buypreset_listbox.cpp"
+				$File	"cstrike\VGUI\buypreset_listbox.h"
+				$File	"cstrike\VGUI\buypreset_panel.cpp"
+				$File	"cstrike\VGUI\buypreset_weaponsetlabel.h"
+				$File	"cstrike\VGUI\career_box.cpp"
+				$File	"cstrike\VGUI\career_box.h"
+				$File	"cstrike\VGUI\career_button.cpp"
+				$File	"cstrike\VGUI\career_button.h"
 				$File	"cstrike\VGUI\counterstrikeviewport.cpp"
 				$File	"cstrike\VGUI\counterstrikeviewport.h"
 				$File	"cstrike\VGUI\cstrikebuyequipmenu.cpp"

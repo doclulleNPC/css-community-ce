@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: dll-agnostic routines (no dll dependencies here)
 //
@@ -79,9 +79,7 @@ wchar_t * BufWPrintf(wchar_t *buf, int& len, const wchar_t *fmt, ...);
 /**
  *  convenience function that prints an int into a static wchar_t*
  */
-#ifdef _WIN32
 const wchar_t * NumAsWString( int val );
-#endif
 
 //--------------------------------------------------------------------------------------------------------------
 /**

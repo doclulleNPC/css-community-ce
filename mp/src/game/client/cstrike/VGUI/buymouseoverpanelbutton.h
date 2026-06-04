@@ -12,7 +12,7 @@
 #endif
 
 #include <KeyValues.h>
-#include <FileSystem.h>
+#include <filesystem.h>
 #include "mouseoverpanelbutton.h"
 #include "hud.h"
 #include "c_cs_player.h"

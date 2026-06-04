@@ -40,10 +40,16 @@ $Project "Server"
 		$File	"team_spawnpoint.h"
 		$File	"$SRCDIR\game\shared\teamplayroundbased_gamerules.cpp"
 		
+		// FMOD is Windows-only on this build (no Linux FMOD lib). The client's
+		// C_AmbientFMOD RecvTable is [$WIN32]-excluded, so the server's matching
+		// CAmbientFMOD/DT_AmbientFMOD SendTable must be too, or clients hit a
+		// DataTable class mismatch (CreateDecoders failed) and get dropped on connect.
+		// CAmbientFMOD only networks state (no FMOD lib calls); the `ambient_fmod`
+		// entity simply won't exist on POSIX (stock CS maps don't use it).
 		$Folder "FMOD"
 		{
-			$File "fmod\sound_fmod.cpp"
-			$File "fmod\sound_fmod.h"
+			$File "fmod\sound_fmod.cpp"	[$WIN32]
+			$File "fmod\sound_fmod.h"	[$WIN32]
 		}
 
 		$Folder	"Counter Strike Source Community DLL"

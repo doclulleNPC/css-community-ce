@@ -13,12 +13,12 @@
 
 #include <classmenu.h>
 #include <vgui_controls/EditablePanel.h>
-#include <FileSystem.h>
+#include <filesystem.h>
 #include <cs_shareddefs.h>
 #include "cbase.h"
 #include "cs_gamerules.h"
-#include "vgui_controls/imagepanel.h"
-#include "BackgroundPanel.h"
+#include "vgui_controls/ImagePanel.h"
+#include "backgroundpanel.h"
 
 using namespace vgui;
 

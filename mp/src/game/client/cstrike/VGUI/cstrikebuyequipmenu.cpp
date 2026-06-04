@@ -9,7 +9,7 @@
 #include "cstrikebuyequipmenu.h"
 #include "cs_shareddefs.h"
 #include "cstrikebuysubmenu.h"
-#include "BackgroundPanel.h"
+#include "backgroundpanel.h"
 
 using namespace vgui;
 

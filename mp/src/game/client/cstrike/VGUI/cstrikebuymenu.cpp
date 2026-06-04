@@ -9,7 +9,7 @@
 #include "cstrikebuysubmenu.h"
 #include "cstrikebuymenu.h"
 #include "cs_shareddefs.h"
-#include "BackgroundPanel.h"
+#include "backgroundpanel.h"
 #include "buy_presets/buy_presets.h"
 #include "cstrike/bot/shared_util.h"
 #include <vgui/ISurface.h>

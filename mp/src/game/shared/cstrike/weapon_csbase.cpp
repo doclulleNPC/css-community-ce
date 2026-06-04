@@ -16,7 +16,7 @@
 #if defined( CLIENT_DLL )
 
 	#include "vgui/ISurface.h"
-	#include "vgui_controls/controls.h"
+	#include "vgui_controls/Controls.h"
 	#include "c_cs_player.h"
 	#include "hud_crosshair.h"
 	#include "c_te_effect_dispatch.h"
