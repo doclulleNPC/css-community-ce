@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: 
 //
@@ -228,7 +228,11 @@ void CHudRoundTimer::PaintTime(HFont font, int xpos, int ypos, int mins, int sec
 {
 	surface()->DrawSetTextFont(font);
 	wchar_t unicode[6];
-	swprintf(unicode, L"%d:%.2d", mins, secs);
+	// NOTE: the Windows swprintf(dest, fmt, ...) signature has no size argument,
+	// but C99/Linux swprintf(dest, maxlen, fmt, ...) does -- calling the Windows
+	// form on Linux reads the format string as the size and an int arg as the
+	// format pointer, crashing in libc. Use the portable V_snwprintf wrapper.
+	V_snwprintf(unicode, ARRAYSIZE(unicode), L"%d:%.2d", mins, secs);
 	
 	surface()->DrawSetTextPos(xpos, ypos);
 	surface()->DrawUnicodeString( unicode );

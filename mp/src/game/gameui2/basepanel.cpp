@@ -97,6 +97,14 @@ void BasePanel::OnThink()
 {
 	SetBounds(0, 0, GetGameUI2().GetViewport().x, GetGameUI2().GetViewport().y);
 
+	// Only grab mouse/keyboard while the game UI (main menu / pause) is shown.
+	// While playing (game UI hidden) this fullscreen panel must relinquish input,
+	// or it sits on top and eats clicks meant for in-game VGUI dialogs such as
+	// the MOTD and the team/class menus.
+	const bool bUIVisible = GetGameUI2().GetEngineVGui()->IsGameUIVisible();
+	SetMouseInputEnabled(bUIVisible);
+	SetKeyBoardInputEnabled(bUIVisible);
+
 	BaseClass::OnThink();
 }
 

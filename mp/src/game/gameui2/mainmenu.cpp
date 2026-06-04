@@ -106,6 +106,13 @@ void MainMenu::OnThink()
 	BaseClass::OnThink();
 
 	SetBounds(0, 0, GetGameUI2().GetViewport().x, GetGameUI2().GetViewport().y);
+
+	// This menu panel has a null parent, so it does not follow the engine's
+	// hiding of PANEL_GAMEUIDLL in-game. Relinquish input while playing (game UI
+	// hidden) so in-game VGUI dialogs (MOTD, team/class menus) receive clicks.
+	const bool bUIVisible = GetGameUI2().GetEngineVGui()->IsGameUIVisible();
+	SetMouseInputEnabled(bUIVisible);
+	SetKeyBoardInputEnabled(bUIVisible);
 }
 
 bool MainMenu::IsVisible()
