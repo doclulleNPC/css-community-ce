@@ -1,4 +1,4 @@
-//========= Copyright © 1996-2005, Valve Corporation, All rights reserved. ============//
+//========= Copyright ï¿½ 1996-2005, Valve Corporation, All rights reserved. ============//
 //
 // Purpose: 
 //
@@ -1192,7 +1192,7 @@ private:
 
 	IntervalTimer m_attentionInterval;								///< time between attention checks
 
-	CCSPlayer *m_attacker;											///< last enemy that hurt us (may not be same as m_enemy)
+	mutable CHandle< CCSPlayer > m_attacker;						///< last enemy that hurt us (may not be same as m_enemy). CHandle (not raw ptr) so it auto-nulls when the attacker entity is freed -- a raw ptr dangled and GetAttacker()'s m_attacker->IsAlive() read freed memory, crashing the game (cs_bot.cpp:496).
 	float m_attackedTimestamp;										///< when we were hurt by the m_attacker
 
 	int m_lastVictimID;												///< the entindex of the last victim we killed, or zero
