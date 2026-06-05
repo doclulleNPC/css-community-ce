@@ -51,6 +51,19 @@ IterationRetval_t CRagdollEnumerator::EnumElement( IHandleEntity *pHandleEntity 
 	if ( pPhysicsObject == NULL )
 		return ITERATION_CONTINUE;
 
+	// Defense in depth (the per-hitbox null-matrix guard lives in TraceToStudio,
+	// bone_setup.cpp): skip ragdolls whose studio model/hitboxes aren't loaded, and
+	// force the hitbox bones to be set up before the engine traces them -- otherwise
+	// the studio hitbox trace dereferences an unset bone-to-world matrix and crashes
+	// on bullet impact. (Order matters: numhitboxsets() dereferences the studio hdr,
+	// so it is only reached after the IsValid() check.)
+	CStudioHdr *pStudioHdr = pModel->GetModelPtr();
+	if ( pStudioHdr == NULL || !pStudioHdr->IsValid() || pStudioHdr->numhitboxsets() == 0 )
+		return ITERATION_CONTINUE;
+
+	if ( !pModel->SetupBones( NULL, -1, BONE_USED_BY_HITBOX, gpGlobals->curtime ) )
+		return ITERATION_CONTINUE;
+
 	trace_t tr;
 	enginetrace->ClipRayToEntity( m_rayShot, MASK_SHOT, pModel, &tr );
 

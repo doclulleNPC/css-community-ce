@@ -2625,14 +2625,14 @@ public:
          X[i] = P[i];
       normalize(X);
 
-// Its y axis is perpendicular to P, so Y = unit( E - X(E·X) ).
+// Its y axis is perpendicular to P, so Y = unit( E - X(Eï¿½X) ).
 
       float dDOTx = dot(D,X);
       for (i = 0 ; i < 3 ; i++)
          Y[i] = D[i] - dDOTx * X[i];
       normalize(Y);
 
-// Its z axis is perpendicular to both X and Y, so Z = X×Y.
+// Its z axis is perpendicular to both X and Y, so Z = Xï¿½Y.
 
       cross(X,Y,Z);
 
@@ -5282,6 +5282,12 @@ bool SweepBoxToStudio( IPhysicsSurfaceProps *pProps, const Ray_t& ray, CStudioHd
 			continue;
 		
 		//FIXME: Won't work with scaling!
+		// Skip hitboxes whose bone world-matrix pointer is null: a ragdoll that is
+		// mid-setup can have unset bone matrices, and *hitboxbones[pbox->bone] below
+		// would dereference null -- crashing during bullet-impact ragdoll traces
+		// (TraceToStudio -> IntersectRayWithOBB).
+		if ( !hitboxbones[pbox->bone] )
+			continue;
 		trace_t obbTrace;
 		if ( IntersectRayWithOBB( clippedRay, *hitboxbones[pbox->bone], pbox->bbmin, pbox->bbmax, 0.0f, &obbTrace ) )
 		{
@@ -5346,6 +5352,11 @@ bool TraceToStudio( IPhysicsSurfaceProps *pProps, const Ray_t& ray, CStudioHdr *
 		if ( ( fBoneContents & fContentsMask ) == 0 )
 			continue;
 		
+		// Skip hitboxes whose bone world-matrix pointer is null (see the ray/OBB loop
+		// above): an unprepared ragdoll bone would otherwise crash on the deref below.
+		if ( !hitboxbones[pbox->bone] )
+			continue;
+
 		// columns are axes of the bones in world space, translation is in world space
 		matrix3x4_t& matrix = *hitboxbones[pbox->bone];
 		

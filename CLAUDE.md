@@ -91,12 +91,39 @@ and regenerate, do NOT hand-edit generated solutions/Makefiles.
 - Key client defines (`client_community.vpc`): `CSTRIKE_DLL`, `GAMEUI2`,
   `COMMUNITY_CLIENT_DLL`, `GLOWS_ENABLE`.
 
-## Known broken areas (pre-alpha, per README)
+## Known issues — code-audited 2026-06-05
 
-Multiplayer animation is stuck on `base_playeranimstate` (single-player anim system —
-players freeze on first walk frame; needs a multiplayer animstate rewrite). Rounds don't
-end at 0:00. Bots may crash the game. Prop physics, flashbang fade, and the dynamic
-crosshair are unreliable. Keep these in mind before assuming a bug is newly introduced.
+The README's original bug list was audited against the source; **most claims did not
+hold up** (already fixed or mis-diagnosed). Do NOT trust the old list — verify against
+code. See README.md "Bug status" for evidence/line refs.
+
+**Fixed since the audit** (see README "Fixed since the audit"):
+- Ragdoll bullet-impact crash — null bone-matrix guard in `bone_setup.cpp`
+  (`SweepBoxToStudio`/`TraceToStudio`) + `fx_impact.cpp` (working tree).
+- Bot use-after-free — `m_attacker` raw pointer → `CHandle` (`c5c7d63`).
+- Round-timer spawn crash (`swprintf`) + GameUI2 input yield (`cdfced7`).
+- Friendly target-ID literal `%s` → health (`7115f70`).
+
+Summary of remaining verdicts:
+
+- **Animation "stuck on first frame" — FALSE.** The real CS:S `CCSPlayerAnimState`
+  (`game/shared/cstrike/cs_playeranimstate.cpp:57`) is used with `LEGANIM_9WAY` on both
+  client and server. `CBasePlayerAnimState` is its *base class*, not the broken HL2MP
+  animstate. This is working multiplayer animation — don't "rewrite" it.
+- **Rounds don't end at 0:00 — FALSE for normal maps.** `BombRoundEndCheck()`
+  (`cs_gamerules.cpp:1728`) + `CheckRoundTimeExpired()` (`:2725`) handle it; a planted
+  bomb intentionally runs past 0:00. Real latent gap: objective-less maps lost the draw
+  fallback ("get rid of round draws", `:2733`).
+- **Flashbang fade — render code is correct** (`cs_view_scene.cpp:168`). If it ever
+  sticks, suspect the networked `m_flFlashBangTime`/duration, not the renderer.
+- **Dynamic crosshair cvars — all present/used** in `weapon_csbase.cpp DrawCrosshair()`.
+- **Classmenu lighting — unconfirmed.** Candidate only: `basemodelpanel.cpp:601`
+  (`white[6]` ambient = 0.4 gray, dim/misnamed).
+- **Bots may crash — inconclusive** (not provable statically; needs a repro).
+- **Prop physics — not yet audited.**
+
+Before assuming a bug is real or newly introduced, check the code path first — the
+historical README was unreliable.
 
 ## License & contributions
 
