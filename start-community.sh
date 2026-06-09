@@ -34,6 +34,47 @@ unset LOCPATH                       # don't let a stray locale dir shadow the sy
 export LANG=en_US.UTF-8 LC_ALL=en_US.UTF-8
 export DISPLAY="${DISPLAY:-:0}"
 
+# --- require a running, logged-in Steam --------------------------------------
+# The Source SDK 2013 engine pumps SteamGameServer_RunCallbacks() unconditionally;
+# if Steam is not running, SteamAPI_Init() fails and the engine SEGFAULTs inside
+# libsteam_api.so during startup (a confusing native crash, not a mod bug). So make
+# sure Steam is up and logged in before we launch.
+ensure_steam() {
+    # Already up? Assume the user is logged in and proceed (the common case).
+    if pgrep -x steamwebhelper >/dev/null 2>&1; then
+        return 0
+    fi
+
+    command -v steam >/dev/null 2>&1 || {
+        echo "ERROR: Steam is not running and not installed/in PATH." >&2
+        echo "       Start Steam and log in, then re-run this script." >&2
+        exit 1
+    }
+
+    echo "Steam is not running -- starting it (the engine crashes without it)..."
+    setsid steam >/dev/null 2>&1 < /dev/null &
+
+    # Wait up to ~60s for the client UI process to appear.
+    for _ in $(seq 1 30); do
+        pgrep -x steamwebhelper >/dev/null 2>&1 && break
+        sleep 2
+    done
+    pgrep -x steamwebhelper >/dev/null 2>&1 || {
+        echo "ERROR: Steam did not start in time. Start it, log in, then re-run." >&2
+        exit 1
+    }
+
+    # Wait up to ~60s for an actual login (the API pipe needs a logged-in user).
+    clog="$HOME/.local/share/Steam/logs/connection_log.txt"
+    for _ in $(seq 1 30); do
+        tail -n 50 "$clog" 2>/dev/null | grep -q 'Logged On' && return 0
+        sleep 2
+    done
+    echo "WARNING: Steam is up but login was not confirmed. If the game crashes on" >&2
+    echo "         start, finish logging into Steam first, then re-run." >&2
+}
+ensure_steam
+
 # --- args (with -bots convenience) ------------------------------------------
 EXTRA=()
 for a in "$@"; do
